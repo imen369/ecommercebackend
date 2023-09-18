@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const Article=require("../models/article")
+const {verifyToken} =require("../middleware/verifytoken")
+const {authorizeRoles} = require("../middleware/authorizeRoles")
 // afficher la liste des articles.
-router.get('/', async (req, res, )=> {
+{/*router.get('/', async (req, res, )=> {
 try {
 const articles = await Article.find().populate('scategorieID').exec();
 res.status(200).json(articles);
 } catch (error) {
 res.status(404).json({ message: error.message });
 }
-});
+});*/}
 // créer un nouvel article
 router.post('/', async (req, res) => {
     
@@ -21,6 +23,16 @@ res.status(200).json(nouvarticle );
 res.status(404).json({ message: error.message });
 }
 
+});
+
+// afficher la liste des articles.
+router.get('/',verifyToken,authorizeRoles("user","admin"),async (req, res )=> {
+try {
+const articles = await Article.find();
+res.status(200).json(articles);
+} catch (error) {
+res.status(404).json({ message: error.message });
+}
 });
 // chercher un article
 router.get('/:articleId',async(req, res)=>{

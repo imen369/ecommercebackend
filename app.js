@@ -5,6 +5,7 @@ const categorieRouter =require("./routes/categorie.route")
 const scategorieRouter =require("./routes/scategorie.route")
 const articleRouter =require("./routes/article.route")
 const paymentRouter = require( "./routes/payment.route.js")
+const userRouter= require("./routes/user.route.js")
 dotenv.config()
 const cors=require('cors')
 const app = express();
@@ -29,6 +30,7 @@ res.send("hiiii");
 app.use('/api/categories', categorieRouter);
 app.use('/api/scategories', scategorieRouter);
 app.use('/api/articles', articleRouter);
+app.use('/api/user', userRouter);
 app.listen(process.env.PORT, () => {
 console.log(`Server is listening on port ${process.env.PORT}`); });
 
